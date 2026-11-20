@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <!-- Mobile-first: sin esta etiqueta la página no se adapta al celular -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jose Casseres | Desarrollo Web — Páginas web para tu negocio</title>
+  <meta name="description" content="Páginas web claras, rápidas y adaptadas al celular para pequeños negocios. Pide tu cotización por WhatsApp.">
+
+  <style>
+    /* ============ COLORES DE MARCA (cámbialos aquí y se actualiza todo) ============ */
+    :root {
+      --brand: #2563eb;        /* azul principal */
+      --brand-dark: #1d4ed8;   /* azul al pasar el mouse */
+      --ink: #0f172a;          /* texto principal */
+      --muted: #475569;        /* texto secundario */
+      --bg: #ffffff;
+      --soft: #f1f5f9;         /* fondo de secciones alternas */
+      --line: #e2e8f0;         /* bordes */
+      --wa: #16a34a;           /* verde WhatsApp (accesible con texto blanco) */
+      --wa-dark: #15803d;
+      --radius: 14px;
+    }
+
+    /* ============ BASE (pensada primero para celular) ============ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    section { padding: 56px 0; }
+    .alt { background: var(--soft); }
+    h1 { font-size: 2rem; line-height: 1.15; letter-spacing: -0.02em; }
+    h2 { font-size: 1.6rem; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 10px; }
+    h3 { font-size: 1.1rem; margin-bottom: 6px; }
+    .lead { color: var(--muted); font-size: 1.05rem; max-width: 620px; }
+    .center { text-align: center; }
+    .center .lead { margin-left: auto; margin-right: auto; }
+    .section-head { margin-bottom: 32px; }
+
+    /* Marcador visible para lo que falta por completar */
+    .editar {
+      background: #fef3c7; color: #92400e;
+      padding: 1px 6px; border-radius: 6px;
+      font-weight: 600; font-size: 0.9em;
+    }
+
+    /* ============ BOTONES ============ */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 24px; border-radius: 999px; border: 0; cursor: pointer;
+      font-size: 1rem; font-weight: 700; text-decoration: none;
+      transition: background .15s, transform .1s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--brand); color: #fff; }
+    .btn-primary:hover { background: var(--brand-dark); }
+    .btn-wa { background: var(--wa); color: #fff; }
+    .btn-wa:hover { background: var(--wa-dark); }
+    .btn-ghost { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+    .btn-block { width: 100%; }
+
+    /* ============ HEADER ============ */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    /* Logo en texto: reemplázalo por <img> cuando tengas logo */
+    .logo { font-weight: 800; font-size: 1.05rem; text-decoration: none; letter-spacing: -0.01em; }
+    .logo span { color: var(--brand); }
+    .nav-links { display: none; gap: 24px; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: .95rem; }
+    .nav-links a:hover { color: var(--ink); }
+    .menu-btn {
+      background: none; border: 1px solid var(--line); border-radius: 10px;
+      width: 42px; height: 42px; font-size: 1.3rem; cursor: pointer;
+    }
+    /* Menú desplegable en celular */
+    .mobile-menu { display: none; border-top: 1px solid var(--line); background: #fff; }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block; padding: 14px 20px; text-decoration: none;
+      font-weight: 600; border-bottom: 1px solid var(--line);
+    }
+
+    /* ============ GALERÍA / PORTAFOLIO ============ */
+    .hero-text { margin-bottom: 28px; }
+    .hero-text .btns { display: flex; flex-direction: column; gap: 12px; margin-top: 22px; }
+    .gallery { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    /* Espacios para tus capturas: cambia el div por <img src="imagenes/trabajo1.jpg" alt="..."> */
+    .shot {
+      aspect-ratio: 4 / 3; border-radius: var(--radius);
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      border: 2px dashed #93c5fd;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 16px; color: #1e3a8a; font-weight: 600;
+    }
+
+    /* ============ SERVICIO (PRODUCTO) ============ */
+    .product { display: grid; gap: 24px; }
+    .product ul { list-style: none; margin-top: 14px; display: grid; gap: 10px; }
+    .product li { padding-left: 28px; position: relative; }
+    .product li::before { content: "✓"; position: absolute; left: 0; color: var(--brand); font-weight: 800; }
+    .card {
+      background: #fff; border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 24px;
+    }
+
+    /* ============ PRECIOS ============ */
+    .pricing { display: grid; gap: 18px; }
+    .plan { display: flex; flex-direction: column; gap: 14px; }
+    .plan.featured { border: 2px solid var(--brand); position: relative; }
+    .badge {
+      position: absolute; top: -12px; left: 20px;
+      background: var(--brand); color: #fff; font-size: .75rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 999px;
+    }
+    .price { font-size: 2.1rem; font-weight: 800; letter-spacing: -0.02em; }
+    .price small { font-size: .9rem; color: var(--muted); font-weight: 600; }
+    .plan ul { list-style: none; display: grid; gap: 8px; flex: 1; }
+    .plan li { padding-left: 26px; position: relative; color: var(--muted); }
+    .plan li::before { content: "✓"; position: absolute; left: 0; color: var(--brand); font-weight: 800; }
+    .note { margin-top: 18px; color: var(--muted); font-size: .92rem; }
+
+    /* ============ BENEFICIOS / USOS ============ */
+    .grid-3 { display: grid; gap: 16px; }
+    .icon {
+      width: 44px; height: 44px; border-radius: 12px; background: #dbeafe;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 12px;
+    }
+    .card p { color: var(--muted); }
+
+    /* ============ COMPRA ============ */
+    .buy { background: var(--ink); color: #fff; border-radius: 20px; padding: 32px 22px; }
+    .buy .lead { color: #cbd5e1; }
+    .buy label { display: block; font-weight: 600; margin: 18px 0 8px; }
+    .buy select {
+      width: 100%; padding: 14px; border-radius: 12px; border: 0;
+      font-size: 1rem; background: #fff; color: var(--ink);
+    }
+    .buy .btn { margin-top: 18px; }
+    .pay { display: grid; gap: 10px; margin-top: 24px; }
+    .pay div { background: rgba(255,255,255,.08); border-radius: 12px; padding: 12px 14px; }
+    .pay strong { display: block; }
+
+    /* ============ TESTIMONIOS ============ */
+    .quote { font-style: italic; color: var(--muted); }
+    .who { margin-top: 12px; font-weight: 700; }
+
+    /* ============ FAQ ============ */
+    details { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 10px; }
+    summary { font-weight: 700; cursor: pointer; }
+    details p { margin-top: 10px; color: var(--muted); }
+
+    /* ============ FOOTER ============ */
+    footer { background: var(--ink); color: #cbd5e1; padding: 40px 0 28px; }
+    footer a { color: #fff; }
+    .foot { display: grid; gap: 14px; }
+    .copy { margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.12); font-size: .88rem; }
+
+    /* Botón flotante de WhatsApp (siempre visible en celular) */
+    .float-wa {
+      position: fixed; right: 16px; bottom: 16px; z-index: 60;
+      background: var(--wa); color: #fff; text-decoration: none; font-weight: 700;
+      padding: 14px 20px; border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,.25);
+    }
+
+    /* ============ PANTALLAS MÁS GRANDES (tablet y escritorio) ============ */
+    @media (min-width: 720px) {
+      h1 { font-size: 3rem; }
+      h2 { font-size: 2rem; }
+      section { padding: 80px 0; }
+      .menu-btn, .mobile-menu { display: none !important; }
+      .nav-links { display: flex; }
+      .hero-text .btns { flex-direction: row; }
+      .gallery { grid-template-columns: repeat(3, 1fr); }
+      .product { grid-template-columns: 1.2fr 1fr; align-items: center; }
+      .pricing, .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .buy { padding: 48px; }
+      .pay { grid-template-columns: 1fr 1fr; }
+      .foot { grid-template-columns: 1fr auto; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================== HEADER ============================== -->
+  <header>
+    <div class="container nav">
+      <a href="#inicio" class="logo">Jose Casseres <span>| Desarrollo Web</span></a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="#servicio">Servicio</a>
+        <a href="#precios">Precios</a>
+        <a href="#faq">Preguntas</a>
+        <a class="btn btn-wa" style="padding:10px 18px" href="https://wa.me/573226651897" target="_blank" rel="noopener">WhatsApp</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#servicio">Servicio</a>
+      <a href="#precios">Precios</a>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#faq">Preguntas</a>
+    </div>
+  </header>
+
+  <main id="inicio">
+
+    <!-- ============================== GALERÍA ============================== -->
+    <section>
+      <div class="container">
+        <div class="hero-text">
+          <h1>Tu negocio, con una página web que sí vende.</h1>
+          <p class="lead">Creo páginas web claras, rápidas y adaptadas al celular para pequeños negocios. Pide tu cotización directo por WhatsApp.</p>
+          <div class="btns">
+            <a class="btn btn-wa" href="https://wa.me/573226651897?text=Hola%20Jose%2C%20quiero%20cotizar%20una%20p%C3%A1gina%20web%20para%20mi%20negocio." target="_blank" rel="noopener">Cotizar por WhatsApp</a>
+            <a class="btn btn-ghost" href="#precios">Ver precios</a>
+          </div>
+        </div>
+
+        <!-- [EDITAR] Sustituye cada recuadro por una captura real de tus trabajos -->
+        <div class="gallery">
+          <div class="shot"><span class="editar">[EDITAR]</span>&nbsp;Captura de trabajo 1</div>
+          <div class="shot"><span class="editar">[EDITAR]</span>&nbsp;Captura de trabajo 2</div>
+          <div class="shot"><span class="editar">[EDITAR]</span>&nbsp;Captura de trabajo 3</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== SERVICIO ============================== -->
+    <section class="alt" id="servicio">
+      <div class="container product">
+        <div>
+          <h2>Páginas web para pequeños negocios</h2>
+          <p class="lead">Diseño y desarrollo tu página de principio a fin, pensada para que tus clientes te encuentren y te escriban fácil.</p>
+          <ul>
+            <li>Diseño profesional con los colores de tu marca</li>
+            <li>Se ve bien en celular, tablet y computador</li>
+            <li>Botones que llevan directo a tu WhatsApp</li>
+            <li>Trato directo conmigo, sin intermediarios</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>¿Cómo funciona?</h3>
+          <p>1. Me escribes por WhatsApp y me cuentas de tu negocio.<br>
+             2. Eliges el paquete que más te conviene.<br>
+             3. Desarrollo tu página y la revisamos juntos.<br>
+             4. Te ayudo a dejarla lista para usar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== PRECIO ============================== -->
+    <section id="precios">
+      <div class="container">
+        <div class="section-head center">
+          <h2>Precios claros, sin sorpresas</h2>
+          <p class="lead">Precios en pesos colombianos (COP). Elige el paquete y escríbeme.</p>
+        </div>
+
+        <div class="pricing">
+          <!-- Cambia los precios aquí si quieres ajustarlos -->
+          <div class="card plan">
+            <h3>Básico</h3>
+            <div class="price">$150.000 <small>COP</small></div>
+            <ul>
+              <li>Página de una sola sección</li>
+              <li>Adaptada al celular</li>
+              <li>Botón de WhatsApp</li>
+            </ul>
+            <a class="btn btn-ghost btn-block" href="#comprar" data-plan="Básico">Elegir Básico</a>
+          </div>
+
+          <div class="card plan featured">
+            <span class="badge">Más elegido</span>
+            <h3>Profesional</h3>
+            <div class="price">$300.000 <small>COP</small></div>
+            <ul>
+              <li>Hasta 5 secciones: inicio, servicios, galería, preguntas y contacto</li>
+              <li>Enlaces a tus redes sociales</li>
+              <li>Adaptada al celular</li>
+            </ul>
+            <a class="btn btn-primary btn-block" href="#comprar" data-plan="Profesional">Elegir Profesional</a>
+          </div>
+
+          <div class="card plan">
+            <h3>Completo</h3>
+            <div class="price">$450.000 <small>COP</small></div>
+            <ul>
+              <li>Todo lo del paquete Profesional</li>
+              <li>2 rondas de cambios</li>
+              <li>Ayuda para publicarla en internet</li>
+            </ul>
+            <a class="btn btn-ghost btn-block" href="#comprar" data-plan="Completo">Elegir Completo</a>
+          </div>
+        </div>
+        <p class="note center">El dominio y el hosting no están incluidos: son un costo aparte.</p>
+      </div>
+    </section>
+
+    <!-- ============================== BENEFICIOS ============================== -->
+    <section class="alt" id="beneficios">
+      <div class="container">
+        <div class="section-head center">
+          <h2>¿Por qué trabajar conmigo?</h2>
+        </div>
+        <div class="grid-3">
+          <div class="card"><div class="icon">📱</div><h3>Hecha para el celular</h3><p>La mayoría de tus clientes te verá desde el teléfono, por eso diseño pensando primero en la pantalla pequeña.</p></div>
+          <div class="card"><div class="icon">💬</div><h3>Contacto directo</h3><p>Tus clientes te escriben por WhatsApp con un solo toque, sin formularios largos.</p></div>
+          <div class="card"><div class="icon">🤝</div><h3>Trato cercano</h3><p>Hablas conmigo desde el primer mensaje hasta la entrega. Sin intermediarios.</p></div>
+          <div class="card"><div class="icon">💵</div><h3>Precios justos</h3><p>Paquetes con precio visible para que sepas desde el inicio cuánto vas a invertir.</p></div>
+          <div class="card"><div class="icon">🎨</div><h3>Con tu identidad</h3><p>Uso los colores y el estilo de tu negocio para que la página se sienta tuya.</p></div>
+          <div class="card"><div class="icon">🚀</div><h3>Ayuda para publicar</h3><p>En el paquete Completo te acompaño para dejar tu página en línea.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== BOTÓN DE COMPRA ============================== -->
+    <section id="comprar">
+      <div class="container">
+        <div class="buy">
+          <h2>Empecemos tu página</h2>
+          <p class="lead">Elige tu paquete y te abro un chat de WhatsApp con el mensaje ya escrito.</p>
+
+          <label for="planSelect">Paquete</label>
+          <select id="planSelect">
+            <option value="Básico">Básico — $150.000</option>
+            <option value="Profesional" selected>Profesional — $300.000</option>
+            <option value="Completo">Completo — $450.000</option>
+          </select>
+
+          <a class="btn btn-wa btn-block" id="buyBtn" href="https://wa.me/573226651897" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+
+          <div class="pay">
+            <!-- [EDITAR] Pon aquí tus datos reales de pago -->
+            <div><strong>Nequi</strong><span class="editar">[EDITAR] número de Nequi</span></div>
+            <div><strong>Bancolombia</strong><span class="editar">[EDITAR] tipo y número de cuenta</span></div>
+          </div>
+          <p class="note" style="color:#cbd5e1">El pago y el anticipo se acuerdan por WhatsApp. <span class="editar">[EDITAR] condiciones de pago</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== USOS ============================== -->
+    <section class="alt">
+      <div class="container">
+        <div class="section-head center">
+          <h2>¿Para qué tipo de negocio sirve?</h2>
+          <p class="lead">Una página web ayuda a cualquier negocio que quiera mostrarse mejor y recibir más mensajes.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card"><h3>🛍️ Tiendas y emprendimientos</h3><p>Muestra tus productos y recibe pedidos por WhatsApp.</p></div>
+          <div class="card"><h3>🍽️ Restaurantes y comida</h3><p>Comparte tu menú, ubicación y horarios en un solo enlace.</p></div>
+          <div class="card"><h3>💼 Servicios profesionales</h3><p>Presenta lo que ofreces y facilita que te contacten.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== TESTIMONIOS ============================== -->
+    <section>
+      <div class="container">
+        <div class="section-head center">
+          <h2>Lo que dicen los clientes</h2>
+          <p class="lead"><span class="editar">[EDITAR]</span> Agrega aquí testimonios reales cuando tengas tus primeros clientes.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card"><p class="quote"><span class="editar">[EDITAR]</span> Testimonio real del cliente.</p><p class="who"><span class="editar">[EDITAR]</span> Nombre y negocio</p></div>
+          <div class="card"><p class="quote"><span class="editar">[EDITAR]</span> Testimonio real del cliente.</p><p class="who"><span class="editar">[EDITAR]</span> Nombre y negocio</p></div>
+          <div class="card"><p class="quote"><span class="editar">[EDITAR]</span> Testimonio real del cliente.</p><p class="who"><span class="editar">[EDITAR]</span> Nombre y negocio</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== FAQ ============================== -->
+    <section class="alt" id="faq">
+      <div class="container" style="max-width:760px">
+        <div class="section-head center"><h2>Preguntas frecuentes</h2></div>
+
+        <details>
+          <summary>¿Cómo puedo pagar?</summary>
+          <p>Puedes pagar por Nequi o Bancolombia. Los detalles los acordamos por WhatsApp.</p>
+        </details>
+        <details>
+          <summary>¿El dominio y el hosting están incluidos?</summary>
+          <p>No. Son un costo aparte. Te explico las opciones cuando hablemos.</p>
+        </details>
+        <details>
+          <summary>¿Se verá bien en el celular?</summary>
+          <p>Sí. Todas las páginas se diseñan para verse bien en celular, tablet y computador.</p>
+        </details>
+        <details>
+          <summary>¿Puedo pedir cambios?</summary>
+          <p>El paquete Completo incluye 2 rondas de cambios. Para los otros paquetes, lo conversamos por WhatsApp.</p>
+        </details>
+        <details>
+          <summary>¿Cuánto tarda la entrega?</summary>
+          <p><span class="editar">[EDITAR]</span> Indica aquí tus tiempos de entrega reales.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <div>
+          <strong style="color:#fff">Jose Casseres | Desarrollo Web</strong><br>
+          Páginas web para pequeños negocios.
+        </div>
+        <div>
+          <a href="https://wa.me/573226651897" target="_blank" rel="noopener">WhatsApp: +57 322 665 1897</a><br>
+          <span class="editar">[EDITAR]</span> Redes sociales
+        </div>
+      </div>
+      <p class="copy">© <span id="year">2026</span> Jose Casseres. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <a class="float-wa" href="https://wa.me/573226651897?text=Hola%20Jose%2C%20quiero%20informaci%C3%B3n%20sobre%20tus%20p%C3%A1ginas%20web." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">💬 WhatsApp</a>
+
+  <script>
+    // Número de WhatsApp (formato internacional, sin + ni espacios)
+    var WA_NUMBER = "573226651897";
+
+    // Arma el enlace de WhatsApp con el paquete elegido
+    function buildLink(plan) {
+      var msg = "Hola Jose, quiero el paquete " + plan + " para mi página web.";
+      return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+    }
+
+    var select = document.getElementById("planSelect");
+    var buyBtn = document.getElementById("buyBtn");
+
+    function updateBuy() { buyBtn.href = buildLink(select.value); }
+    select.addEventListener("change", updateBuy);
+    updateBuy(); // enlace correcto desde que carga la página
+
+    // Al pulsar "Elegir ..." en un paquete, se selecciona ese paquete en la sección de compra
+    document.querySelectorAll("[data-plan]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        select.value = el.getAttribute("data-plan");
+        updateBuy();
+      });
+    });
+
+    // Menú desplegable del celular
+    var menuBtn = document.getElementById("menuBtn");
+    var menu = document.getElementById("mobileMenu");
+    menuBtn.addEventListener("click", function () {
+      var open = menu.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", open);
+    });
+    // Cierra el menú al elegir una opción
+    menu.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        menu.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    // Año actual en el footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
