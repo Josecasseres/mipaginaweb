@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejemplo de diseño — Restaurante</title>
+  <style>
+    /* Colores de esta demo (cámbialos aquí) */
+    :root { --brand:#c2410c; --brand-dark:#9a3412; --ink:#1c1917; --muted:#78716c; --soft:#fff7ed; --line:#fed7aa; --wa:#16a34a; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); line-height:1.6; }
+    .container { max-width:900px; margin:0 auto; padding:0 20px; }
+
+    /* Franja que aclara que es un ejemplo y no un negocio real */
+    .demo-bar { background:#111827; color:#fff; text-align:center; font-size:.85rem; padding:8px 12px; }
+    .demo-bar a { color:#93c5fd; }
+
+    header { border-bottom:1px solid var(--line); }
+    .nav { display:flex; justify-content:space-between; align-items:center; height:60px; }
+    .logo { font-weight:800; color:var(--brand); letter-spacing:-.02em; }
+
+    .btn { display:inline-block; padding:13px 24px; border-radius:999px; font-weight:700; text-decoration:none; color:#fff; background:var(--brand); }
+    .btn:hover { background:var(--brand-dark); }
+    .btn-wa { background:var(--wa); }
+
+    .hero { background:var(--soft); padding:48px 0; text-align:center; }
+    .hero h1 { font-size:2rem; line-height:1.15; letter-spacing:-.02em; }
+    .hero p { color:var(--muted); margin:12px auto 22px; max-width:480px; }
+
+    section { padding:48px 0; }
+    h2 { font-size:1.5rem; margin-bottom:20px; text-align:center; }
+
+    /* Menú: nombre y precio en la misma línea */
+    .menu { display:grid; gap:24px; }
+    .menu h3 { color:var(--brand); margin-bottom:8px; border-bottom:2px solid var(--line); padding-bottom:6px; }
+    .dish { display:flex; justify-content:space-between; gap:12px; padding:8px 0; }
+    .dish small { display:block; color:var(--muted); }
+    .dish b { white-space:nowrap; }
+
+    .info { display:grid; gap:14px; }
+    .box { background:var(--soft); border-radius:14px; padding:20px; }
+
+    footer { background:var(--ink); color:#d6d3d1; text-align:center; padding:28px 20px; font-size:.9rem; }
+
+    @media (min-width:720px) {
+      .hero h1 { font-size:3rem; }
+      .menu, .info { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-bar">Ejemplo de diseño con un negocio ficticio · <a href="../index.html">Volver a Jose Casseres | Desarrollo Web</a></div>
+
+  <header>
+    <div class="container nav">
+      <span class="logo">Sabor del Barrio</span>
+      <a class="btn btn-wa" style="padding:9px 16px;font-size:.9rem" href="#">Reservar</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Comida casera,<br>hecha con cariño</h1>
+      <p>Mira el menú del día, nuestro horario y cómo llegar. Reserva tu mesa por WhatsApp.</p>
+      <a class="btn" href="#menu">Ver menú</a>
+    </div>
+  </section>
+
+  <section id="menu">
+    <div class="container">
+      <h2>Nuestro menú</h2>
+      <div class="menu">
+        <div>
+          <h3>Platos fuertes</h3>
+          <div class="dish"><div>Bandeja de la casa<small>Carne, arroz, frijoles y plátano</small></div><b>$28.000</b></div>
+          <div class="dish"><div>Pollo a la plancha<small>Con ensalada y papas</small></div><b>$22.000</b></div>
+          <div class="dish"><div>Sancocho<small>Receta tradicional</small></div><b>$25.000</b></div>
+        </div>
+        <div>
+          <h3>Bebidas y postres</h3>
+          <div class="dish"><div>Jugo natural<small>Del sabor del día</small></div><b>$7.000</b></div>
+          <div class="dish"><div>Limonada de coco</div><b>$9.000</b></div>
+          <div class="dish"><div>Postre del día</div><b>$8.000</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff">
+    <div class="container">
+      <h2>Visítanos</h2>
+      <div class="info">
+        <div class="box"><strong>🕒 Horario</strong><br>Lunes a sábado: 11:00 a. m. – 9:00 p. m.<br>Domingo: 11:00 a. m. – 4:00 p. m.</div>
+        <div class="box"><strong>📍 Ubicación</strong><br>Calle Ejemplo #00-00<br>Barrio Ejemplo, Ciudad</div>
+      </div>
+      <p style="text-align:center;margin-top:24px"><a class="btn btn-wa" href="#">Reservar por WhatsApp</a></p>
+    </div>
+  </section>
+
+  <footer>
+    Sabor del Barrio — negocio ficticio creado como ejemplo de diseño.<br>
+    Diseño por Jose Casseres | Desarrollo Web
+  </footer>
+
+</body>
+</html>
