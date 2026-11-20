@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejemplo de diseño — Barbería</title>
+  <style>
+    /* Colores de esta demo (cámbialos aquí) */
+    :root { --brand:#d4a017; --brand-dark:#b8890f; --ink:#111827; --muted:#9ca3af; --card:#1f2937; --line:#374151; --wa:#16a34a; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; background:var(--ink); color:#f9fafb; line-height:1.6; }
+    .container { max-width:900px; margin:0 auto; padding:0 20px; }
+
+    /* Franja que aclara que es un ejemplo y no un negocio real */
+    .demo-bar { background:#f9fafb; color:#111827; text-align:center; font-size:.85rem; padding:8px 12px; }
+    .demo-bar a { color:#1d4ed8; }
+
+    header { border-bottom:1px solid var(--line); }
+    .nav { display:flex; justify-content:space-between; align-items:center; height:60px; }
+    .logo { font-weight:800; color:var(--brand); letter-spacing:.04em; text-transform:uppercase; }
+
+    .btn { display:inline-block; padding:13px 24px; border-radius:999px; font-weight:700; text-decoration:none; color:#111827; background:var(--brand); }
+    .btn:hover { background:var(--brand-dark); }
+    .btn-wa { background:var(--wa); color:#fff; }
+
+    .hero { padding:56px 0; text-align:center; }
+    .hero h1 { font-size:2rem; line-height:1.15; letter-spacing:-.02em; }
+    .hero p { color:var(--muted); margin:12px auto 22px; max-width:480px; }
+
+    section { padding:44px 0; }
+    h2 { font-size:1.5rem; margin-bottom:20px; text-align:center; }
+
+    .services { display:grid; gap:12px; }
+    .service { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; display:flex; justify-content:space-between; gap:12px; align-items:center; }
+    .service small { display:block; color:var(--muted); }
+    .service b { color:var(--brand); font-size:1.1rem; white-space:nowrap; }
+
+    .steps { display:grid; gap:12px; }
+    .step { background:var(--card); border-radius:14px; padding:18px; }
+
+    .info { background:var(--card); border-radius:14px; padding:22px; text-align:center; }
+
+    footer { border-top:1px solid var(--line); color:var(--muted); text-align:center; padding:28px 20px; font-size:.9rem; }
+
+    @media (min-width:720px) {
+      .hero h1 { font-size:3rem; }
+      .services { grid-template-columns:1fr 1fr; }
+      .steps { grid-template-columns:repeat(3,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-bar">Ejemplo de diseño con un negocio ficticio · <a href="../index.html">Volver a Jose Casseres | Desarrollo Web</a></div>
+
+  <header>
+    <div class="container nav">
+      <span class="logo">Barbería Don Corte</span>
+      <a class="btn btn-wa" style="padding:9px 16px;font-size:.9rem" href="#">Agendar</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Corte y barba<br>con estilo</h1>
+      <p>Mira los servicios y precios, y agenda tu cita por WhatsApp en segundos.</p>
+      <a class="btn" href="#servicios">Ver servicios</a>
+    </div>
+  </section>
+
+  <section id="servicios">
+    <div class="container">
+      <h2>Servicios y precios</h2>
+      <div class="services">
+        <div class="service"><div>Corte clásico<small>Tijera o máquina</small></div><b>$20.000</b></div>
+        <div class="service"><div>Corte + barba<small>Perfilado incluido</small></div><b>$30.000</b></div>
+        <div class="service"><div>Barba<small>Arreglo y toalla caliente</small></div><b>$15.000</b></div>
+        <div class="service"><div>Corte infantil<small>Hasta 10 años</small></div><b>$15.000</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2>Agenda en 3 pasos</h2>
+      <div class="steps">
+        <div class="step"><strong>1. Elige</strong><br>Escoge tu servicio.</div>
+        <div class="step"><strong>2. Escríbenos</strong><br>Toca "Agendar" y se abre WhatsApp.</div>
+        <div class="step"><strong>3. Ven</strong><br>Te confirmamos día y hora.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="info">
+        <strong>🕒 Horario</strong><br>Lunes a sábado: 9:00 a. m. – 7:00 p. m.<br><br>
+        <strong>📍 Ubicación</strong><br>Calle Ejemplo #00-00, Barrio Ejemplo<br><br>
+        <a class="btn btn-wa" href="#">Agendar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Barbería Don Corte — negocio ficticio creado como ejemplo de diseño.<br>
+    Diseño por Jose Casseres | Desarrollo Web
+  </footer>
+
+</body>
+</html>
