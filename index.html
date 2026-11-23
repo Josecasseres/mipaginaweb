@@ -6,6 +6,7 @@
        Los estilos en línea se permiten porque la página usa atributos style. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
+  <script src="assets/boot.js"></script>
   <!-- Mobile-first: sin esta etiqueta la página no se adapta al celular -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jose Casseres | Desarrollo Web — Páginas web para tu negocio</title>
@@ -30,7 +31,7 @@
 
     /* ============ BASE (pensada primero para celular) ============ */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; } /* el navbar fijo no tapa los títulos */
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       color: var(--ink);
@@ -188,6 +189,46 @@
     }
 
     /* ============ PANTALLAS MÁS GRANDES (tablet y escritorio) ============ */
+    /* ============ NAVBAR FIJO: se encoge y gana sombra al bajar ============ */
+    header { transition: box-shadow .25s ease; }
+    .nav { transition: height .25s ease; }
+    .logo img { transition: height .25s ease; }
+    header.scrolled { box-shadow: 0 4px 18px rgba(15, 23, 42, .09); } /* sombra al bajar */
+    header.scrolled .nav { height: 54px; }
+    header.scrolled .logo img { height: 32px; }
+    /* Enlace de la sección que se está viendo */
+    .nav-links a:not(.btn) { position: relative; padding: 4px 0; }
+    .nav-links a:not(.btn)::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+      background: var(--brand); transform: scaleX(0); transition: transform .25s ease;
+    }
+    .nav-links a.active:not(.btn) { color: var(--ink); }
+    .nav-links a.active:not(.btn)::after { transform: scaleX(1); }
+    .mobile-menu a.active { color: var(--brand); background: var(--soft); }
+
+    /* ============ SCROLL REVEAL: cada bloque aparece al llegar a él ============ */
+    /* :where() no suma especificidad, así el estado visible siempre gana.
+       Solo se oculta si hay JS (clase .js); sin JS todo se ve normal. */
+    .js :where(.section-head, .hero-text, .shot, .card, .buy, details, .note, .product > div) {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+      transition-delay: var(--d, 0ms); /* escalonado: cada tarjeta entra un poco después */
+    }
+    .js .is-visible { opacity: 1; transform: none; }
+    .js .shot.is-visible:hover { transform: translateY(-3px); transition-delay: 0ms; }
+    /* Si app.js falla, a los 4 s se muestra todo (ver boot.js) */
+    html.js.reveal-off :where(.section-head, .hero-text, .shot, .card, .buy, details, .note, .product > div) {
+      opacity: 1; transform: none; transition: none;
+    }
+    /* Quien pidió menos movimiento en su celular/PC no ve animaciones */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .js :where(.section-head, .hero-text, .shot, .card, .buy, details, .note, .product > div) {
+        opacity: 1; transform: none; transition: none;
+      }
+      header, .nav, .logo img, .nav-links a::after { transition: none; }
+    }
+
     @media (min-width: 720px) {
       h1 { font-size: 3rem; }
       h2 { font-size: 2rem; }
