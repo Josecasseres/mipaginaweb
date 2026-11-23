@@ -2,6 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <!-- Seguridad: solo se permite cargar lo propio (self). Sin scripts en línea ni de terceros.
+       Los estilos en línea se permiten porque la página usa atributos style. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <!-- Mobile-first: sin esta etiqueta la página no se adapta al celular -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jose Casseres | Desarrollo Web — Páginas web para tu negocio</title>
@@ -439,48 +443,6 @@
 
   <a class="float-wa" href="https://wa.me/573226651897?text=Hola%20Jose%2C%20quiero%20informaci%C3%B3n%20sobre%20tus%20p%C3%A1ginas%20web." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">💬 WhatsApp</a>
 
-  <script>
-    // Número de WhatsApp (formato internacional, sin + ni espacios)
-    var WA_NUMBER = "573226651897";
-
-    // Arma el enlace de WhatsApp con el paquete elegido
-    function buildLink(plan) {
-      var msg = "Hola Jose, quiero el paquete " + plan + " para mi página web.";
-      return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
-    }
-
-    var select = document.getElementById("planSelect");
-    var buyBtn = document.getElementById("buyBtn");
-
-    function updateBuy() { buyBtn.href = buildLink(select.value); }
-    select.addEventListener("change", updateBuy);
-    updateBuy(); // enlace correcto desde que carga la página
-
-    // Al pulsar "Elegir ..." en un paquete, se selecciona ese paquete en la sección de compra
-    document.querySelectorAll("[data-plan]").forEach(function (el) {
-      el.addEventListener("click", function () {
-        select.value = el.getAttribute("data-plan");
-        updateBuy();
-      });
-    });
-
-    // Menú desplegable del celular
-    var menuBtn = document.getElementById("menuBtn");
-    var menu = document.getElementById("mobileMenu");
-    menuBtn.addEventListener("click", function () {
-      var open = menu.classList.toggle("open");
-      menuBtn.setAttribute("aria-expanded", open);
-    });
-    // Cierra el menú al elegir una opción
-    menu.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        menu.classList.remove("open");
-        menuBtn.setAttribute("aria-expanded", "false");
-      });
-    });
-
-    // Año actual en el footer
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  <script src="assets/app.js" defer></script>
 </body>
 </html>

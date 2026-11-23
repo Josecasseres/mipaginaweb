@@ -1,0 +1,28 @@
+# Claves y credenciales: NUNCA se suben al repositorio
+.env
+.env.*
+*.pem
+*.key
+*.p12
+id_rsa*
+credentials*.json
+secrets*
+
+# Bases de datos y copias de respaldo locales
+*.sqlite
+*.sqlite3
+*.db
+*.bak
+*.sql
+
+# Dependencias y compilados
+node_modules/
+dist/
+build/
+
+# Archivos del sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
