@@ -6,48 +6,94 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ejemplo de diseño de página web para un restaurante, creado por Jose Casseres | Desarrollo Web.">
   <title>Ejemplo de diseño — Restaurante</title>
   <style>
     /* Colores de esta demo (cámbialos aquí) */
-    :root { --brand:#c2410c; --brand-dark:#9a3412; --ink:#1c1917; --muted:#78716c; --soft:#fff7ed; --line:#fed7aa; --wa:#15803d; }
+    :root {
+      --brand:#c2410c; --brand-dark:#9a3412; --ink:#1c1917; --muted:#78716c;
+      --soft:#fff7ed; --line:#fed7aa; --wa:#15803d; --wa-dark:#166534;
+      --glow:#fed7aa; --surface:#fff;
+    }
     * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; scroll-padding-top:74px; }
     body { font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); line-height:1.6; }
-    .container { max-width:900px; margin:0 auto; padding:0 20px; }
+    a { color:inherit; }
+    :focus-visible { outline:3px solid #f59e0b; outline-offset:3px; border-radius:4px; }
+    ::selection { background:var(--brand); color:#fff; }
+    .container { width:100%; max-width:1000px; margin:0 auto; padding:0 20px; }
 
     /* Franja que aclara que es un ejemplo y no un negocio real */
-    .demo-bar { background:#111827; color:#fff; text-align:center; font-size:.85rem; padding:8px 12px; }
-    .demo-bar a { color:#93c5fd; }
+    .demo-bar { background:#111827; color:#fff; text-align:center; font-size:.82rem; padding:8px 12px; }
+    .demo-bar a { color:#93c5fd; text-decoration:none; font-weight:700; }
 
-    header { border-bottom:1px solid var(--line); }
-    .nav { display:flex; justify-content:space-between; align-items:center; height:60px; }
-    .logo { font-weight:800; color:var(--brand); letter-spacing:-.02em; }
+    /* ============ HEADER ============ */
+    header { position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+    .nav { display:flex; justify-content:space-between; align-items:center; gap:12px; min-height:64px; }
+    .logo { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:-.02em; text-decoration:none; }
+    .logo-mark { width:36px; height:36px; border-radius:11px; display:grid; place-items:center; background:var(--brand); color:#fff; font-size:1.1rem; box-shadow:0 6px 14px rgba(194,65,12,.26); }
+    .nav-links { display:none; gap:22px; align-items:center; }
+    .nav-links a { text-decoration:none; color:var(--muted); font-weight:700; font-size:.92rem; }
+    .nav-links a:hover { color:var(--brand); }
 
-    .btn { display:inline-block; padding:13px 24px; border-radius:999px; font-weight:700; text-decoration:none; color:#fff; background:var(--brand); }
-    .btn:hover { background:var(--brand-dark); }
-    .btn-wa { background:var(--wa); }
+    /* ============ BOTONES ============ */
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 22px; border-radius:999px; font-weight:700; text-decoration:none; color:#fff; background:var(--brand); box-shadow:0 8px 18px rgba(194,65,12,.24); transition:transform .15s, box-shadow .15s, background .15s; }
+    .btn:hover { background:var(--brand-dark); transform:translateY(-2px); box-shadow:0 12px 24px rgba(194,65,12,.3); }
+    .btn-wa { background:var(--wa); box-shadow:0 8px 18px rgba(21,128,61,.25); }
+    .btn-wa:hover { background:var(--wa-dark); box-shadow:0 12px 24px rgba(21,128,61,.32); }
 
-    .hero { background:var(--soft); padding:48px 0; text-align:center; }
-    .hero h1 { font-size:2rem; line-height:1.15; letter-spacing:-.02em; }
-    .hero p { color:var(--muted); margin:12px auto 22px; max-width:480px; }
+    /* ============ HERO ============ */
+    .hero { position:relative; overflow:hidden; padding:64px 0 72px; text-align:center; background:linear-gradient(180deg,#fff,var(--soft)); }
+    .hero::before { content:""; position:absolute; width:400px; height:400px; border-radius:50%; top:-190px; right:-120px; background:radial-gradient(circle,var(--glow),transparent 70%); }
+    .hero::after { content:""; position:absolute; width:300px; height:300px; border-radius:50%; bottom:-200px; left:-100px; background:radial-gradient(circle,#ffedd5,transparent 70%); }
+    .hero .container { position:relative; z-index:1; }
+    .eyebrow { display:inline-block; padding:7px 15px; border-radius:999px; background:#fff; color:var(--brand); font-size:.78rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; box-shadow:0 4px 14px rgba(194,65,12,.14); }
+    .hero h1 { font-size:clamp(2.1rem,6vw,3.3rem); line-height:1.08; letter-spacing:-.03em; margin:18px 0 14px; text-wrap:balance; }
+    .hero p { color:var(--muted); max-width:540px; margin:0 auto 22px; font-size:1.05rem; }
+    .stars { display:flex; justify-content:center; align-items:center; gap:6px; color:var(--brand); font-size:1.1rem; letter-spacing:2px; margin-bottom:20px; }
+    .stars span { color:var(--muted); font-size:.85rem; letter-spacing:0; font-weight:700; margin-left:6px; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
 
-    section { padding:48px 0; }
-    h2 { font-size:1.5rem; margin-bottom:20px; text-align:center; }
+    /* ============ SECCIONES ============ */
+    section { padding:64px 0; }
+    .section-head { text-align:center; margin-bottom:30px; }
+    .section-head .eyebrow { background:var(--soft); }
+    h2 { font-size:clamp(1.6rem,4vw,2.2rem); line-height:1.15; letter-spacing:-.02em; text-wrap:balance; }
+    .section-head p { color:var(--muted); max-width:540px; margin:10px auto 0; }
 
-    /* Menú: nombre y precio en la misma línea */
-    .menu { display:grid; gap:24px; }
-    .menu h3 { color:var(--brand); margin-bottom:8px; border-bottom:2px solid var(--line); padding-bottom:6px; }
-    .dish { display:flex; justify-content:space-between; gap:12px; padding:8px 0; }
-    .dish small { display:block; color:var(--muted); }
-    .dish b { white-space:nowrap; }
+    /* Menú con línea de puntos entre nombre y precio */
+    .menu { display:grid; gap:18px; }
+    .card { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:22px; box-shadow:0 12px 30px rgba(15,23,42,.06); }
+    .card h3 { color:var(--brand); font-size:1.1rem; margin-bottom:6px; padding-bottom:8px; border-bottom:2px solid var(--line); }
+    .dish { display:flex; align-items:baseline; gap:8px; padding:11px 0; border-bottom:1px dashed var(--line); }
+    .dish:last-child { border-bottom:0; }
+    .dish .name { font-weight:700; flex:none; }
+    .dish .dots { flex:1; border-bottom:2px dotted var(--line); transform:translateY(-4px); min-width:16px; }
+    .dish b { color:var(--brand); white-space:nowrap; }
+    .dish small { display:block; color:var(--muted); font-weight:400; }
 
-    .info { display:grid; gap:14px; }
-    .box { background:var(--soft); border-radius:14px; padding:20px; }
+    /* Visítanos */
+    .info { display:grid; gap:16px; }
+    .box { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:24px; text-align:center; box-shadow:0 12px 30px rgba(15,23,42,.06); }
+    .box .icon { width:48px; height:48px; margin:0 auto 10px; border-radius:14px; display:grid; place-items:center; background:var(--soft); font-size:1.4rem; }
+    .box strong { display:block; margin-bottom:4px; }
 
-    footer { background:var(--ink); color:#d6d3d1; text-align:center; padding:28px 20px; font-size:.9rem; }
+    /* CTA final */
+    .cta { margin:0 20px 64px; border-radius:24px; padding:44px 24px; text-align:center; color:#fff; background:linear-gradient(135deg,var(--brand),var(--brand-dark)); box-shadow:0 20px 44px rgba(194,65,12,.28); }
+    .cta h2 { color:#fff; }
+    .cta p { color:rgba(255,255,255,.88); max-width:520px; margin:10px auto 22px; }
+
+    footer { background:var(--ink); color:#d6d3d1; text-align:center; padding:36px 20px; font-size:.9rem; }
+    footer strong { color:#fff; }
 
     @media (min-width:720px) {
-      .hero h1 { font-size:3rem; }
+      .nav-links { display:flex; }
       .menu, .info { grid-template-columns:1fr 1fr; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto; }
+      .btn { transition:none; }
+      .btn:hover { transform:none; }
     }
   </style>
 </head>
@@ -57,52 +103,72 @@
 
   <header>
     <div class="container nav">
-      <span class="logo">Sabor del Barrio</span>
-      <a class="btn btn-wa" style="padding:9px 16px;font-size:.9rem" href="#">Reservar</a>
+      <a href="#inicio" class="logo"><span class="logo-mark">🍽️</span> Sabor del Barrio</a>
+      <nav class="nav-links" aria-label="Principal"><a href="#menu">Menú</a><a href="#visitanos">Visítanos</a></nav>
+      <a class="btn btn-wa" style="padding:10px 16px;font-size:.9rem" href="#">Reservar</a>
     </div>
   </header>
 
-  <section class="hero">
+  <main>
+  <section class="hero" id="inicio">
     <div class="container">
+      <span class="eyebrow">Abierto hoy · 11:00 a. m. – 9:00 p. m.</span>
       <h1>Comida casera,<br>hecha con cariño</h1>
       <p>Mira el menú del día, nuestro horario y cómo llegar. Reserva tu mesa por WhatsApp.</p>
-      <a class="btn" href="#menu">Ver menú</a>
+      <div class="stars" role="img" aria-label="4.8 de 5 estrellas">★★★★★ <span>4.8 · comensales felices</span></div>
+      <div class="hero-actions">
+        <a class="btn" href="#menu">Ver menú</a>
+        <a class="btn btn-wa" href="#">Reservar por WhatsApp</a>
+      </div>
     </div>
   </section>
 
   <section id="menu">
     <div class="container">
-      <h2>Nuestro menú</h2>
+      <div class="section-head">
+        <span class="eyebrow">Hecho fresco cada día</span>
+        <h2>Nuestro menú</h2>
+        <p>Platos caseros a precios justos, para comer tranquilo.</p>
+      </div>
       <div class="menu">
-        <div>
+        <div class="card">
           <h3>Platos fuertes</h3>
-          <div class="dish"><div>Bandeja de la casa<small>Carne, arroz, frijoles y plátano</small></div><b>$28.000</b></div>
-          <div class="dish"><div>Pollo a la plancha<small>Con ensalada y papas</small></div><b>$22.000</b></div>
-          <div class="dish"><div>Sancocho<small>Receta tradicional</small></div><b>$25.000</b></div>
+          <div class="dish"><span class="name">Bandeja de la casa</span><span class="dots"></span><b>$28.000</b><small>Carne, arroz, frijoles y plátano</small></div>
+          <div class="dish"><span class="name">Pollo a la plancha</span><span class="dots"></span><b>$22.000</b><small>Con ensalada y papas</small></div>
+          <div class="dish"><span class="name">Sancocho</span><span class="dots"></span><b>$25.000</b><small>Receta tradicional</small></div>
         </div>
-        <div>
+        <div class="card">
           <h3>Bebidas y postres</h3>
-          <div class="dish"><div>Jugo natural<small>Del sabor del día</small></div><b>$7.000</b></div>
-          <div class="dish"><div>Limonada de coco</div><b>$9.000</b></div>
-          <div class="dish"><div>Postre del día</div><b>$8.000</b></div>
+          <div class="dish"><span class="name">Jugo natural</span><span class="dots"></span><b>$7.000</b><small>Del sabor del día</small></div>
+          <div class="dish"><span class="name">Limonada de coco</span><span class="dots"></span><b>$9.000</b></div>
+          <div class="dish"><span class="name">Postre del día</span><span class="dots"></span><b>$8.000</b></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section style="background:#fff">
+  <section id="visitanos" style="background:var(--soft)">
     <div class="container">
-      <h2>Visítanos</h2>
+      <div class="section-head"><span class="eyebrow">Te esperamos</span><h2>Visítanos</h2></div>
       <div class="info">
-        <div class="box"><strong>🕒 Horario</strong><br>Lunes a sábado: 11:00 a. m. – 9:00 p. m.<br>Domingo: 11:00 a. m. – 4:00 p. m.</div>
-        <div class="box"><strong>📍 Ubicación</strong><br>Calle Ejemplo #00-00<br>Barrio Ejemplo, Ciudad</div>
+        <div class="box"><div class="icon">🕒</div><strong>Horario</strong>Lunes a sábado: 11:00 a. m. – 9:00 p. m.<br>Domingo: 11:00 a. m. – 4:00 p. m.</div>
+        <div class="box"><div class="icon">📍</div><strong>Ubicación</strong>Calle Ejemplo #00-00<br>Barrio Ejemplo, Ciudad</div>
       </div>
-      <p style="text-align:center;margin-top:24px"><a class="btn btn-wa" href="#">Reservar por WhatsApp</a></p>
     </div>
   </section>
+
+  <section class="cta">
+    <div class="container">
+      <h2>¿Listo para reservar tu mesa?</h2>
+      <p>Escríbenos por WhatsApp y te confirmamos la mesa en segundos.</p>
+      <a class="btn btn-wa" href="#">Reservar por WhatsApp</a>
+    </div>
+  </section>
+
+  </main>
 
   <footer>
-    Sabor del Barrio — negocio ficticio creado como ejemplo de diseño.<br>
+    <strong>Sabor del Barrio</strong> — negocio ficticio creado como ejemplo de diseño.<br>
     Diseño por Jose Casseres | Desarrollo Web
   </footer>
 
