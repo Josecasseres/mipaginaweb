@@ -8,7 +8,17 @@ var datosNegocio = {
   "description": "Páginas web claras, rápidas y adaptadas al celular para pequeños negocios.",
   "url": "https://josecasseres.github.io/mipaginaweb/",
   "telephone": "+573226651897",
-  "areaServed": [{ "@type": "Country", "name": "Colombia" }],
+  "areaServed": [
+    { "@type": "City", "name": "Cartagena" },
+    { "@type": "AdministrativeArea", "name": "Bolívar" },
+    { "@type": "Country", "name": "Colombia" }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Cartagena",
+    "addressRegion": "Bolívar",
+    "addressCountry": "CO"
+  },
   "sameAs": [
     "https://www.tiktok.com/@desarrollo.web58",
     "https://www.instagram.com/desarrollo.web58"
