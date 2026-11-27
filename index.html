@@ -59,12 +59,7 @@
     .center .lead { margin-left: auto; margin-right: auto; }
     .section-head { margin-bottom: 32px; }
 
-    /* Marcador visible para lo que falta por completar */
-    .editar {
-      background: #fef3c7; color: #92400e;
-      padding: 1px 6px; border-radius: 6px;
-      font-weight: 600; font-size: 0.9em;
-    }
+    /* Los marcadores [EDITAR] ya no se usan: los testimonios se activarán cuando haya reales */
 
     /* ============ BOTONES ============ */
     .btn {
@@ -431,17 +426,22 @@
       </div>
     </section>
 
-    <!-- ============================== TESTIMONIOS ============================== -->
-    <section>
+    <!-- ============================== TESTIMONIOS ==============================
+         Ocultos hasta tener testimonios reales. Para activarlos:
+         1) Reemplaza las 3 tarjetas por los testimonios verdaderos.
+         2) Ajusta el texto "lead" con una frase acorde.
+         3) Quita el atributo hidden de la etiqueta <section> de abajo.
+    -->
+    <section id="testimonios" hidden>
       <div class="container">
         <div class="section-head center">
           <h2>Lo que dicen los clientes</h2>
-          <p class="lead"><span class="editar">[EDITAR]</span> Agrega aquí testimonios reales cuando tengas tus primeros clientes.</p>
+          <p class="lead">Testimonios de clientes reales.</p>
         </div>
         <div class="grid-3">
-          <div class="card"><p class="quote"><span class="editar">[EDITAR]</span> Testimonio real del cliente.</p><p class="who"><span class="editar">[EDITAR]</span> Nombre y negocio</p></div>
-          <div class="card"><p class="quote"><span class="editar">[EDITAR]</span> Testimonio real del cliente.</p><p class="who"><span class="editar">[EDITAR]</span> Nombre y negocio</p></div>
-          <div class="card"><p class="quote"><span class="editar">[EDITAR]</span> Testimonio real del cliente.</p><p class="who"><span class="editar">[EDITAR]</span> Nombre y negocio</p></div>
+          <div class="card"><p class="quote">Testimonio del cliente.</p><p class="who">Nombre y negocio</p></div>
+          <div class="card"><p class="quote">Testimonio del cliente.</p><p class="who">Nombre y negocio</p></div>
+          <div class="card"><p class="quote">Testimonio del cliente.</p><p class="who">Nombre y negocio</p></div>
         </div>
       </div>
     </section>
