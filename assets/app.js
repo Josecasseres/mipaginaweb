@@ -1,5 +1,17 @@
+// ============ CONFIGURACIÓN DEL SITIO (cámbialo aquí) ============
 // Número de WhatsApp (formato internacional, sin + ni espacios)
 var WA_NUMBER = "573226651897";
+// Cómo se muestra el número en el footer
+var WA_DISPLAY = "+57 322 665 1897";
+
+// Mensajes predefinidos. "planes" se calcula según el paquete elegido.
+var WA_MESSAGES = {
+  general: "Hola Jose, quiero información sobre tus páginas web.",
+  cotizar: "Hola Jose, quiero cotizar una página web para mi negocio.",
+  planes: function (plan) {
+    return "Hola Jose, quiero el paquete " + planValido(plan) + " para mi página web.";
+  }
+};
 
 // Lista permitida: solo estos paquetes existen. Cualquier otro valor se ignora
 var PLANES = ["Básico", "Profesional", "Completo"];
@@ -10,10 +22,13 @@ function planValido(plan) {
   return PLANES.indexOf(plan) !== -1 ? plan : PLAN_POR_DEFECTO;
 }
 
-// Arma el enlace de WhatsApp con el paquete elegido (el texto va codificado)
+// Arma un enlace de WhatsApp con el texto indicado (codificado)
+function waLink(texto) {
+  return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(texto);
+}
+
 function buildLink(plan) {
-  var msg = "Hola Jose, quiero el paquete " + planValido(plan) + " para mi página web.";
-  return "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
+  return waLink(WA_MESSAGES.planes(plan));
 }
 
 var select = document.getElementById("planSelect");
@@ -22,6 +37,16 @@ var buyBtn = document.getElementById("buyBtn");
 function updateBuy() { buyBtn.href = buildLink(select.value); }
 select.addEventListener("change", updateBuy);
 updateBuy(); // enlace correcto desde que carga la página
+
+// Los enlaces marcados con data-wa se construyen desde la configuración de arriba.
+// El href escrito en el HTML queda como respaldo si JavaScript no está disponible.
+document.querySelectorAll("[data-wa]").forEach(function (el) {
+  var mensaje = WA_MESSAGES[el.getAttribute("data-wa")];
+  if (mensaje) el.href = waLink(mensaje);
+});
+// El teléfono visible del footer también sale de la configuración
+var waText = document.getElementById("waText");
+if (waText) waText.textContent = WA_DISPLAY;
 
 // Al pulsar "Elegir ..." en un paquete, se selecciona ese paquete en la sección de compra
 document.querySelectorAll("[data-plan]").forEach(function (el) {
