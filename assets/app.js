@@ -34,16 +34,32 @@ document.querySelectorAll("[data-plan]").forEach(function (el) {
 // Menú desplegable del celular
 var menuBtn = document.getElementById("menuBtn");
 var menu = document.getElementById("mobileMenu");
+
+function setMenu(abierto) {
+  menu.classList.toggle("open", abierto);
+  menuBtn.setAttribute("aria-expanded", abierto);
+  menuBtn.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
+}
+
 menuBtn.addEventListener("click", function () {
-  var open = menu.classList.toggle("open");
-  menuBtn.setAttribute("aria-expanded", open);
+  setMenu(!menu.classList.contains("open"));
 });
 // Cierra el menú al elegir una opción
 menu.querySelectorAll("a").forEach(function (a) {
-  a.addEventListener("click", function () {
-    menu.classList.remove("open");
-    menuBtn.setAttribute("aria-expanded", "false");
-  });
+  a.addEventListener("click", function () { setMenu(false); });
+});
+// Escape cierra el menú y devuelve el foco al botón que lo abrió
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" && menu.classList.contains("open")) {
+    setMenu(false);
+    menuBtn.focus();
+  }
+});
+// Un clic fuera del menú también lo cierra
+document.addEventListener("click", function (e) {
+  if (menu.classList.contains("open") && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
+    setMenu(false);
+  }
 });
 
 // Año actual en el footer
@@ -51,43 +67,44 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
 // ============ DESDE AQUÍ: NAVBAR FIJO Y SCROLL REVEAL ============
 
-// app.js arrancó bien: se cancela la red de seguridad de boot.js
-clearTimeout(window.__revealFallback);
+// --- Navbar: resalta el enlace de la sección que se está viendo ---
+var enlacesNav = document.querySelectorAll(".nav-links a[href^='#'], .mobile-menu a[href^='#']");
+function marcarActivo(id) {
+  enlacesNav.forEach(function (a) {
+    var activo = id !== null && a.getAttribute("href") === "#" + id;
+    a.classList.toggle("active", activo);
+    if (activo) a.setAttribute("aria-current", "true");
+    else a.removeAttribute("aria-current");
+  });
+}
 
 // --- Navbar: sombra y tamaño reducido al bajar ---
+// Un solo listener de scroll para el navbar y el resaltado: menos trabajo por cuadro.
 var header = document.querySelector("header");
 var esperandoFrame = false; // evita trabajar más de una vez por cuadro
 function alScrollear() {
   if (esperandoFrame) return;
   esperandoFrame = true;
   requestAnimationFrame(function () {
-    header.classList.toggle("scrolled", window.scrollY > 8);
+    var y = window.scrollY;
+    header.classList.toggle("scrolled", y > 8);
+    // Arriba del todo (galería/inicio) no hay enlace resaltado
+    if (y < 200) marcarActivo(null);
     esperandoFrame = false;
   });
 }
 window.addEventListener("scroll", alScrollear, { passive: true });
 alScrollear(); // estado correcto si la página carga ya con scroll
 
-// --- Navbar: resalta el enlace de la sección que se está viendo ---
-var enlacesNav = document.querySelectorAll(".nav-links a[href^='#'], .mobile-menu a[href^='#']");
-function marcarActivo(id) {
-  enlacesNav.forEach(function (a) {
-    a.classList.toggle("active", id !== null && a.getAttribute("href") === "#" + id);
-  });
-}
 var seccionesNav = document.querySelectorAll("main section[id]");
 if ("IntersectionObserver" in window) {
-  // La franja de detección está en la parte alta de la pantalla (35% desde arriba)
+  // La franja de detección está en la parte alta de la pantalla
   var vigilaSecciones = new IntersectionObserver(function (entradas) {
     entradas.forEach(function (e) {
       if (e.isIntersecting) marcarActivo(e.target.id);
     });
-  }, { rootMargin: "-35% 0px -60% 0px" });
+  }, { rootMargin: "-30% 0px -50% 0px" });
   seccionesNav.forEach(function (s) { vigilaSecciones.observe(s); });
-  // Arriba del todo (galería/inicio) no hay enlace resaltado
-  window.addEventListener("scroll", function () {
-    if (window.scrollY < 200) marcarActivo(null);
-  }, { passive: true });
 }
 
 // --- Scroll reveal: cada bloque aparece al entrar en pantalla ---
@@ -100,11 +117,14 @@ if (!("IntersectionObserver" in window) || menosMovimiento) {
   // Sin soporte o sin animaciones: todo visible de una vez
   objetivos.forEach(function (el) { el.classList.add("is-visible"); });
 } else {
-  // Escalonado: hermanos en la misma fila entran con 90 ms de diferencia (máx. 5 pasos)
+  // Escalonado: hermanos en la misma fila entran con 90 ms de diferencia (máx. 5 pasos).
+  // Se cuenta por padre una sola vez en lugar de buscar hermanos dentro del bucle.
+  var indicePorPadre = new WeakMap();
   objetivos.forEach(function (el) {
-    var hermanos = objetivos.filter(function (o) { return o.parentNode === el.parentNode; });
-    var posicion = Math.min(hermanos.indexOf(el), 5);
-    el.style.setProperty("--d", posicion * 90 + "ms");
+    var padre = el.parentNode;
+    var indice = indicePorPadre.has(padre) ? indicePorPadre.get(padre) : 0;
+    indicePorPadre.set(padre, indice + 1);
+    el.style.setProperty("--d", Math.min(indice, 5) * 90 + "ms");
   });
   var vigilaReveal = new IntersectionObserver(function (entradas) {
     entradas.forEach(function (e) {
@@ -115,3 +135,7 @@ if (!("IntersectionObserver" in window) || menosMovimiento) {
   }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
   objetivos.forEach(function (el) { vigilaReveal.observe(el); });
 }
+
+// app.js terminó sin errores: se cancela la red de seguridad de boot.js.
+// Si algo fallaba antes, el timeout seguía activo y la página no se quedaba oculta.
+clearTimeout(window.__revealFallback);
