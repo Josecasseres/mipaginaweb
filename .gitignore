@@ -8,6 +8,9 @@ id_rsa*
 credentials*.json
 secrets*
 
+# Prospección de clientes (datos privados: NUNCA publicar en GitHub Pages)
+prospeccion/
+
 # Bases de datos y copias de respaldo locales
 *.sqlite
 *.sqlite3
